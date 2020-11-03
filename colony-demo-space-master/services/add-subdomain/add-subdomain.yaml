@@ -1,0 +1,29 @@
+spec_version: 1
+kind: TerraForm
+
+inputs:
+  - REGION: us-east-1
+  - SANDBOX_DNS:
+  - DNS_ZONE_NAME:
+  - SUBDOMAIN:
+  - IS_PRIVATE_ZONE: false
+  - ROLE_ARN: PowerUserAccess
+
+module:
+  source: github.com/QualiSystemsLab/colony-demo-space/terraform/aws-route53-add-subdomain-with-wait
+
+terraform_version: 0.11.11
+
+variables:
+  # var_file: terraform.tfvars  #optional
+  values:
+    - AWS_REGION: $REGION
+    - DNS_ZONE_NAME: $DNS_ZONE_NAME
+    - IS_PRIVATE_ZONE: $IS_PRIVATE_ZONE
+    - SUBDOMAIN: $SUBDOMAIN
+    - SANDBOX_DNS: $SANDBOX_DNS
+
+permissions:  #optional
+  aws:
+    role_arn: $ROLE_ARN     #role assumed by service
+    external_id: 'colony'
